@@ -1,0 +1,11 @@
+{
+  "files_per_day": [4, 7],
+  "commits_per_day": [1, 3],
+  "languages": ["python", "javascript", "typescript", "go", "java", "c", "sql", "shell"],
+  "skip_weekends": false,
+  "output_dir": "snippets",
+  "git": {
+    "name": "jjjj31",
+    "email": "2025280148@mails.szu.edu.cn"
+  }
+}

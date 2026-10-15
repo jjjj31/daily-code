@@ -1,0 +1,40 @@
+name: daily-commit
+
+on:
+  schedule:
+    # 04:17 UTC = 北京时间 12:17。选这个点是因为 UTC 与东八区落在同一天，
+    # 贡献日历按 UTC 归属，避免跨日错位。
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "忽略“今天已提交”检查，强制再提交一次"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-commit
+  cancel-in-progress: false
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate and push
+        run: |
+          python scripts/daily_commit.py --push ${{ inputs.force && '--force' || '' }}
+
+      - name: Show recent commits
+        if: always()
+        run: git log --oneline -5
