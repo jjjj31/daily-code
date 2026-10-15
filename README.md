@@ -43,6 +43,14 @@ python scripts/daily_commit.py --files 8 --commits 2 --seed 42   # 临时覆盖�
 
 Windows 上也可以直接双击 `run-local.bat`（等价于 `--push`）。
 
+改了 `scripts/snippets.py` 里的模板后，可以跑一次自检，用本机已有的编译器验证生成的代码真的能解析：
+
+```bash
+python scripts/check_templates.py --rounds 30
+```
+
+`go` 和 `sql` 本机没有工具链时会被标成 `skipped`，其余语言逐个真编译。
+
 想在云端之外再加一道本地定时（可选，例如想让提交时间更随机）：
 
 ```powershell
